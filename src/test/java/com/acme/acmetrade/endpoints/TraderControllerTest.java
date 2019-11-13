@@ -12,8 +12,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.math.BigDecimal;
 
 import static io.restassured.RestAssured.*;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
@@ -35,13 +35,13 @@ public class TraderControllerTest {
 		given()
 		.accept(MediaType.APPLICATION_JSON_VALUE)
 		.when()
-		.get("/trader")
+		.get("/trader/id")
 		.then()
 		.statusCode(HttpStatus.OK.value())
 		.and()
 		.extract().as(Trader.class);
 
-		assertTrue(rtnValue.getId().compareTo(BigDecimal.ZERO) == 1);
+		assertNotNull(rtnValue);
 
 
 	}
