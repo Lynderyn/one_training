@@ -23,6 +23,10 @@ public class TradersService {
     public Trader getTrader(String traderId) {
         return traderRepository.findOneById(traderId);
     }
+    
+    public void deleteTrader(String traderId) {
+    	traderRepository.deleteById(traderId);
+    }
 
     public Trader createTrader(Trader trader) {
         String id = trader.getId();
