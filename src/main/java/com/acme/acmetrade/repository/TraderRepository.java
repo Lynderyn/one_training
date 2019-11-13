@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TraderRepository extends CrudRepository<Trader, String> {
-
+    public Trader findOneById(String id);
+    public boolean existsById(String id);
 }
