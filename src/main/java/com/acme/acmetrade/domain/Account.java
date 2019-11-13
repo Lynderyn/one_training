@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
@@ -20,15 +19,17 @@ public class Account {
     @NotBlank
     private String accountNumber;
 
-    @NotBlank
-    private String traderId;
+    @NotNull
+    @ManyToOne
+    private Trader trader;
 
     @NotNull
     private Currency currency;
 
     private double balance;
 
-    private List<String> positionIds;
+    @OneToMany
+    private List<Position> positions;
 
     @Column(updatable = false)
     @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss")
@@ -50,13 +51,13 @@ public class Account {
     public Account() {
     }
 
-    public Account(String id, @NotBlank String accountNumber, @NotBlank String traderId, @NotNull Currency currency, double balance, List<String> positionIds, Date createdAt, Date updatedAt) {
+    public Account(String id, @NotBlank String accountNumber, Trader trader, @NotNull Currency currency, double balance, List<Position> positions, Date createdAt, Date updatedAt) {
         this.id = id;
         this.accountNumber = accountNumber;
-        this.traderId = traderId;
+        this.trader = trader;
         this.currency = currency;
         this.balance = balance;
-        this.positionIds = positionIds;
+        this.positions = positions;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -77,12 +78,12 @@ public class Account {
         this.accountNumber = accountNumber;
     }
 
-    public String getTraderId() {
-        return traderId;
+    public Trader getTrader() {
+        return trader;
     }
 
-    public void setTraderId(String traderId) {
-        this.traderId = traderId;
+    public void setTrader(Trader trader) {
+        this.trader = trader;
     }
 
     public Currency getCurrency() {
@@ -101,12 +102,12 @@ public class Account {
         this.balance = balance;
     }
 
-    public List<String> getPositionIds() {
-        return positionIds;
+    public List<Position> getPositions() {
+        return positions;
     }
 
-    public void setPositionIds(List<String> positionIds) {
-        this.positionIds = positionIds;
+    public void setPositions(List<Position> positions) {
+        this.positions = positions;
     }
 
     public Date getCreatedAt() {
@@ -123,5 +124,18 @@ public class Account {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return getId().equals(position.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

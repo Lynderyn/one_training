@@ -25,7 +25,8 @@ public class Trader {
     @NotBlank
     private String govId;
 
-    private List<String> accountIds;
+    @OneToMany
+    private List<Account> accounts;
 
     @Column(updatable = false)
     @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss")
@@ -35,7 +36,7 @@ public class Trader {
 
     public Trader() {};
 
-    public Trader(String id, String fName, String lName, String phone, String email, String address, String govId, List<String> accountIds, Date createdAt, Date updatedAt) {
+    public Trader(String id, String fName, String lName, String phone, String email, String address, String govId, List<Account> accounts, Date createdAt, Date updatedAt) {
         this.id = id;
         this.fName = fName;
         this.lName = lName;
@@ -43,7 +44,7 @@ public class Trader {
         this.email = email;
         this.address = address;
         this.govId = govId;
-        this.accountIds = accountIds;
+        this.accounts = accounts;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -131,12 +132,12 @@ public class Trader {
         this.updatedAt = updatedAt;
     }
 
-    public List<String> getAccountIds() {
-        return accountIds;
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setAccountIds(List<String> accountIds) {
-        this.accountIds = accountIds;
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     @Override
