@@ -15,7 +15,7 @@ public class TraderController {
 
 
     @Autowired
-    private final TradersService tradersService;
+    private TradersService tradersService;
 
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getTrader(){
