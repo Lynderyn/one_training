@@ -24,7 +24,7 @@ public class TraderControllerTest {
 		given()
 		.accept(MediaType.APPLICATION_JSON_VALUE)
 		.when()
-		.get("/traders")
+		.get("/traders/")
 		.then()
 		.statusCode(HttpStatus.OK.value());
 	}

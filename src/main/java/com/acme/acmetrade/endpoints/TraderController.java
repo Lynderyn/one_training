@@ -41,4 +41,12 @@ public class TraderController {
         Trader createdTrader = tradersService.createTrader(trader);
         return new ResponseEntity<>(createdTrader, HttpStatus.CREATED);
     }
-}
+
+    @DeleteMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+        public ResponseEntity<Object> deleteTraderById(@PathVariable("id") String id){
+        tradersService.deleteTrader(id);
+                return new ResponseEntity<Object>("Sucessful delete trader", HttpStatus.OK);
+    }
+
+
+    }
