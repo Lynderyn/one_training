@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("trader")
+@RequestMapping("traders")
 public class TraderController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class TraderController {
     @Autowired
     private final MapValidationErrorService mapValidationErrorService;
 
-    @GetMapping(path = "Traders", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getTrader(){
         return  new ResponseEntity<>(tradersService.getAllTraders(), HttpStatus.OK);
     }
