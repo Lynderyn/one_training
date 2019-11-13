@@ -29,6 +29,11 @@ public class TraderController {
     public ResponseEntity<Object> getTrader(){
         return  new ResponseEntity<>(tradersService.getAllTraders(), HttpStatus.OK);
     }
+    
+    @GetMapping(path="{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> getTraderById(@PathVariable("id") String id){
+    	return  new ResponseEntity<Object>(tradersService.getTrader(id), HttpStatus.OK);
+    }
 
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> createTrader(@Valid @RequestBody Trader trader, BindingResult bindingResult) {
