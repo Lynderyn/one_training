@@ -16,11 +16,14 @@ import javax.validation.Valid;
 @RequestMapping("traders")
 public class TraderController {
 
-    @Autowired
     private final TradersService tradersService;
+    private final MapValidationErrorService mapValidationErrorService;
 
     @Autowired
-    private final MapValidationErrorService mapValidationErrorService;
+    public TraderController(TradersService tradersService, MapValidationErrorService mapValidationErrorService) {
+        this.tradersService = tradersService;
+        this.mapValidationErrorService = mapValidationErrorService;
+    }
 
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getTrader(){
