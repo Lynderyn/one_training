@@ -2,6 +2,7 @@ package com.acme.acmetrade.endpoints;
 
 import com.acme.acmetrade.domain.Trader;
 import com.acme.acmetrade.repository.TraderRepository;
+import io.restassured.RestAssured;
 import io.restassured.mapper.TypeRef;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.TransactionSystemException;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
@@ -97,7 +99,42 @@ public class TraderControllerTest {
 	}
 
 	//adam methods below
+@Test
+void validateTraderEntityRules(){
+		assertAll("Null Fields",
+				()->{
+			//First Name
+					Trader fName = new Trader("","last","555-555-5555", "test@test.com","1 test");
+					assertThrows(TransactionSystemException.class, ()-> traderRepository.save(fName));
+				},
+			//Last Name
+				()-> {
+					Trader lName = new Trader("first","","555-555-5555", "test@test.com","1 test");
+					assertThrows(TransactionSystemException.class, () -> traderRepository.save(lName));
+				},
+			//Phone
+				()-> {
+					Trader phone = new Trader("first","last","", "test@test.com","1 test");
+					assertThrows(TransactionSystemException.class, () -> traderRepository.save(phone));
+				},
+			//Email
+				()-> {
+					Trader email = new Trader("first","last","555-555-5555", "","1 test");
 
+						assertThrows(TransactionSystemException.class, () -> traderRepository.save(email));
+
+
+/*				},
+			//Address
+				()-> {
+					Trader email = new Trader("first","last","555-555-5555", "test@test.com","");
+					assertThrows(TransactionSystemException.class, () -> traderRepository.save(email));
+
+*/				}
+
+
+				);
+}
 	//adam methods above
 
 	//hoa methods below
