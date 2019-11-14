@@ -133,6 +133,13 @@ public class TraderControllerTest {
 
 	//my methods below
 
+	@Test
+	void addSamePersonTwice() {
+		given().request().body(testTrader).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE)
+				.when().post("/traders/")
+				.then().statusCode(HttpStatus.BAD_REQUEST.value());
+	}
+
 	//my methods above
 
 	// end of TraderControllerTest
