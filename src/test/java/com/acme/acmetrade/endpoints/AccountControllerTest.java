@@ -1,6 +1,9 @@
 package com.acme.acmetrade.endpoints;
 
+import com.acme.acmetrade.domain.Account;
+import com.acme.acmetrade.domain.Currency;
 import com.acme.acmetrade.domain.Trader;
+import com.acme.acmetrade.repository.AccountRepository;
 import com.acme.acmetrade.repository.TraderRepository;
 import io.restassured.mapper.TypeRef;
 import org.junit.jupiter.api.AfterEach;
@@ -29,15 +32,17 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AccountControllerTest {
 
 	@Autowired
-	private TraderRepository traderRepository;
-
+	private AccountRepository accountRepository;
 	@Autowired
-	private TraderController traderController;
+	private TraderRepository traderRepository;
+	@Autowired
+	private AccountController accountController;
 
 	private Trader testTrader;
+	private Account testAccount;
 
 	@BeforeEach
-	void initTrader() {
+	void initData() {
 		Trader myTrader = new Trader();
 		myTrader.setfName("first");
 		myTrader.setlName("last");
@@ -45,16 +50,37 @@ public class AccountControllerTest {
 		myTrader.setEmail("test@test.com");
 		myTrader.setPhone("555-555-5555");
 		testTrader = traderRepository.save(myTrader);
+		Account myAccount = new Account();
+		myAccount.setAccountNumber("666");
+		myAccount.setBalance(777.77);
+		myAccount.setCurrency(Currency.USD);
+		myAccount.setTrader(testTrader);
+		testAccount = accountRepository.save(myAccount);
 	}
 
 	@AfterEach
-	void killTrader() {
+	void killData() {
+		if(accountRepository.existsById(testAccount.getId())) {
+			accountRepository.delete(testAccount);
+		}
 		if(traderRepository.existsById(testTrader.getId())) {
 			traderRepository.delete(testTrader);
 		}
 	}
 
-	
+	@Test
+	void testGetAccounts() {
+		List<Account> accounts =
+		given().accept(MediaType.APPLICATION_JSON_VALUE)
+		.when().get("/accounts/")
+		.then()
+		.statusCode(HttpStatus.OK.value())
+		.and()
+		.extract()
+		.as(new TypeRef<List<Account>>() {
+		});
+		assertTrue(accounts.contains(testAccount));
+	}
 
 	//adam methods below
 
@@ -69,13 +95,6 @@ public class AccountControllerTest {
     //mz method above
 
     //jesse methods below
-
-	@Test
-	void addSamePersonTwice() {
-		given().request().body(testTrader).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE)
-		.when().post("/traders/")
-		.then().statusCode(HttpStatus.BAD_REQUEST.value());
-	}
 
     //my methods above
 
