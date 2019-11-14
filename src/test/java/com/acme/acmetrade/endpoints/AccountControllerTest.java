@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
-public class TraderControllerTest {
+public class AccountControllerTest {
 
 	@Autowired
 	private TraderRepository traderRepository;
@@ -54,56 +54,7 @@ public class TraderControllerTest {
 		}
 	}
 
-	@Test
-	void getTradersTest() {
-		List<Trader> traders = given()
-		.accept(MediaType.APPLICATION_JSON_VALUE)
-		.when()
-		.get("/traders/")
-		.then()
-		.statusCode(HttpStatus.OK.value())
-		.and()
-		.extract()
-		.as(new TypeRef<List<Trader>>() {});
-
-		assertThat(traders.contains(testTrader));
-	}
-
-	@Test
-	void getTraderIdTest(){
-		String uri = "/traders/" + testTrader.getId();
-		Trader rtnValue =
-		given()
-		.accept(MediaType.APPLICATION_JSON_VALUE)
-		.when()
-		.get(uri)
-		.then()
-		.statusCode(HttpStatus.FOUND.value())
-		.and()
-		.extract().as(Trader.class);
-		assertNotNull(rtnValue);
-	}
 	
-	@Test
-	void testAssertAll() {
-		assertAll(
-				()->{
-					List<Trader> traders = given()
-							.accept(MediaType.APPLICATION_JSON_VALUE)
-							.when()
-							.get("/traders/")
-							.then()
-							.statusCode(HttpStatus.OK.value())
-							.and()
-							.extract()
-							.as(new TypeRef<List<Trader>>() {});
-					traders.forEach(t->{System.out.println(t.getfName() + " " + t.getlName());});
-				},
-				()->{
-					assertTrue(8==(6+2));
-				}
-				);
-	}
 
 	//adam methods below
 
@@ -113,22 +64,11 @@ public class TraderControllerTest {
 
     //hoa methods above
 
-    //mz meth eblow
-	@Test
-	void testAssertAllTraders() {
-		assertAll(
-				()->{
-					assertEquals(8, 8);
-				},
-				()->{
-					assertTrue(8==(6+2));
-				}
-				);
-	}
-
+    //mz meth below
+	
     //mz method above
 
-    //my methods below
+    //jesse methods below
 
 	@Test
 	void addSamePersonTwice() {
