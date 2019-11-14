@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
-@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class TraderControllerTest {
 
 	@Autowired

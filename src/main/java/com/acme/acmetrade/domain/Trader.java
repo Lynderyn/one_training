@@ -1,6 +1,6 @@
 package com.acme.acmetrade.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -9,11 +9,11 @@ import javax.validation.constraints.Pattern;
 import java.util.*;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Trader {
 
     @Id
     private String id;
-
 
     @Pattern(regexp = "[A-Za-z]*", message = "Bad Name")
     private String fName;
@@ -26,7 +26,6 @@ public class Trader {
 
     @Email
     private String email;
-
 
     @NotNull
     private String address;
@@ -41,6 +40,10 @@ public class Trader {
     private Date updatedAt;
 
     public Trader() {};
+
+    public Trader(String id) {
+        this.id = id;
+    }
 
     public Trader(String id, @Pattern(regexp = "[A-Za-z]*") String fName, @Pattern(regexp = "[A-Za-z]*") String lName, @Pattern(regexp = "((\\(\\d{3}\\) ?)|(\\d{3}-))?\\d{3}-\\d{4}") String phone, @NotNull String email, @Pattern(regexp = "[0-9]* [A-Za-z]*") String address, List<Account> accounts, Date createdAt, Date updatedAt) {
         this.id = id;
@@ -148,5 +151,13 @@ public class Trader {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public boolean addAccount(Account account) {
+        if(accounts == null) {
+            accounts = Arrays.asList(account);
+            return true;
+        }
+        return accounts.add(account);
     }
 }

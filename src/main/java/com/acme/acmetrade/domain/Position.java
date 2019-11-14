@@ -1,6 +1,8 @@
 package com.acme.acmetrade.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -10,6 +12,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Position {
 
     @Id

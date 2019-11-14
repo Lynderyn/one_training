@@ -1,9 +1,9 @@
 package com.acme.acmetrade.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.hibernate.validator.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
@@ -12,11 +12,13 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Account {
 
     @Id
     private String id;
 
+    @NotBlank
     @Pattern(regexp = "[0-9]*")
     private String accountNumber;
 
@@ -29,7 +31,7 @@ public class Account {
 
     private double balance;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Position> positions;
 
     @Column(updatable = false)
