@@ -35,7 +35,7 @@ public class TraderControllerTest {
 		given()
 		.accept(MediaType.APPLICATION_JSON_VALUE)
 		.when()
-		.get("/trader/id")
+		.get("/traders/f6b385df-416f-4bdf-b4fd-1096e3231461")
 		.then()
 		.statusCode(HttpStatus.OK.value())
 		.and()
