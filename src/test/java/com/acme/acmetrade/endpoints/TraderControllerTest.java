@@ -3,6 +3,7 @@ package com.acme.acmetrade.endpoints;
 import com.acme.acmetrade.domain.Trader;
 import com.acme.acmetrade.repository.TraderRepository;
 import io.restassured.mapper.TypeRef;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,9 @@ public class TraderControllerTest {
 
 	@Autowired
 	private TraderRepository traderRepository;
+
+	@Autowired
+	private TraderController traderController;
 
 	private Trader testTrader;
 
@@ -107,6 +111,13 @@ public class TraderControllerTest {
     //mz method above
 
     //my methods below
+
+	@Test
+	void addSamePersonTwice() {
+		given().request().body(testTrader).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE)
+		.when().post("/traders/")
+		.then().statusCode(HttpStatus.BAD_REQUEST.value());
+	}
 
     //my methods above
 

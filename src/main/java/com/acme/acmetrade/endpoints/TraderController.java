@@ -45,7 +45,7 @@ public class TraderController {
 	@DeleteMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> deleteTraderById(@PathVariable("id") String id) {
 		tradersService.deleteTrader(id);
-		return new ResponseEntity<Object>("Sucessfully deleted trader", HttpStatus.OK);
+		return new ResponseEntity<Object>("Successfully deleted trader", HttpStatus.OK);
 	}
 
 }
