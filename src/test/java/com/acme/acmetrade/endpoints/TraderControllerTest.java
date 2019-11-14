@@ -17,8 +17,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.TransactionSystemException;
 
-import java.lang.reflect.Type;
-import java.math.BigDecimal;
 import java.util.List;
 
 import static io.restassured.RestAssured.*;
@@ -84,18 +82,6 @@ public class TraderControllerTest {
 
 
 		assertNotNull(rtnValue);
-	}
-
-	@Test
-	void testAssertAll() {
-		assertAll(
-				() -> {
-					assertEquals(8, 8);
-				},
-				() -> {
-					assertTrue(8 == (6 + 2));
-				}
-		);
 	}
 
 	//adam methods below

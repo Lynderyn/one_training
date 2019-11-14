@@ -2,6 +2,7 @@ package com.acme.acmetrade.services;
 
 import com.acme.acmetrade.domain.Trader;
 import com.acme.acmetrade.exception.TraderIdException;
+import com.acme.acmetrade.exception.TraderNotFoundException;
 import com.acme.acmetrade.repository.TraderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,13 @@ public class TradersService {
             if(traderRepository.existsById(id)) {
                 throw new TraderIdException("The Trader ID '" + id + "' already exists");
             }
+        }
+        return traderRepository.save(trader);
+    }
+
+    public Trader updateTrader(Trader trader) {
+        if(!traderRepository.existsById(trader.getId())) {
+            throw new TraderNotFoundException("The trader with id '" + trader.getId() + "' was not found");
         }
         return traderRepository.save(trader);
     }
