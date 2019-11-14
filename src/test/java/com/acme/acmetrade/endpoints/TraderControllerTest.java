@@ -110,13 +110,13 @@ void validateTraderEntityRules(){
 						assertThrows(TransactionSystemException.class, () -> traderRepository.save(email));
 
 
-/*				},
+				},
 			//Address
 				()-> {
 					Trader email = new Trader("first","last","555-555-5555", "test@test.com","");
 					assertThrows(TransactionSystemException.class, () -> traderRepository.save(email));
 
-*/				}
+				}
 
 
 				);
