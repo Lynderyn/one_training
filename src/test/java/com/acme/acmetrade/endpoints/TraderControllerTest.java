@@ -53,18 +53,16 @@ public class TraderControllerTest {
 
 	@Test
 	void getTradersTest() {
-		List<Trader> traders = given()
-				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.when()
-				.get("/traders/")
-				.then()
-				.statusCode(HttpStatus.OK.value())
-				.and()
-				.extract()
-				.as(new TypeRef<List<Trader>>() {
-				});
-
-		traders.forEach(id -> System.out.println(id));
+		List<Trader> traders =
+		given()
+		.accept(MediaType.APPLICATION_JSON_VALUE)
+		.when()
+		.get("/traders/")
+		.then()
+		.statusCode(HttpStatus.OK.value())
+		.and()
+		.extract()
+		.as(new TypeRef<List<Trader>>() {});
 		assertThat(traders.contains(testTrader));
 	}
 
@@ -73,14 +71,13 @@ public class TraderControllerTest {
 		String uri = "/traders/" + testTrader.getId();
 		Trader rtnValue =
 				given()
-						.accept(MediaType.APPLICATION_JSON_VALUE)
-						.when()
-						.get(uri)
-						.then()
-						.statusCode(HttpStatus.OK.value())
-						.and()
-						.extract().as(Trader.class);
-
+				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.when()
+				.get(uri)
+				.then()
+				.statusCode(HttpStatus.OK.value())
+				.and()
+				.extract().as(Trader.class);
 
 		assertNotNull(rtnValue);
 	}
@@ -135,10 +132,19 @@ public class TraderControllerTest {
 	//my methods below
 
 	@Test
+	void testDeleteTrader() {
+		String uri = "/traders/" + testTrader.getId();
+		given().accept(MediaType.APPLICATION_JSON_VALUE)
+		.when().delete(uri)
+		.then().statusCode(HttpStatus.OK.value());
+		assertFalse(traderRepository.existsById(testTrader.getId()));
+	}
+
+	@Test
 	void addSamePersonTwice() {
 		given().request().body(testTrader).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE)
-				.when().post("/traders/")
-				.then().statusCode(HttpStatus.BAD_REQUEST.value());
+		.when().post("/traders/")
+		.then().statusCode(HttpStatus.BAD_REQUEST.value());
 	}
 
 	//my methods above
