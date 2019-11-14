@@ -88,7 +88,16 @@ public class TraderControllerTest {
 	void testAssertAll() {
 		assertAll(
 				()->{
-					assertEquals(8, 8);
+					List<Trader> traders = given()
+							.accept(MediaType.APPLICATION_JSON_VALUE)
+							.when()
+							.get("/traders/")
+							.then()
+							.statusCode(HttpStatus.OK.value())
+							.and()
+							.extract()
+							.as(new TypeRef<List<Trader>>() {});
+					traders.forEach(t->{System.out.println(t.getfName() + " " + t.getlName());});
 				},
 				()->{
 					assertTrue(8==(6+2));
@@ -105,6 +114,17 @@ public class TraderControllerTest {
     //hoa methods above
 
     //mz meth eblow
+	@Test
+	void testAssertAllTraders() {
+		assertAll(
+				()->{
+					assertEquals(8, 8);
+				},
+				()->{
+					assertTrue(8==(6+2));
+				}
+				);
+	}
 
     //mz method above
 
