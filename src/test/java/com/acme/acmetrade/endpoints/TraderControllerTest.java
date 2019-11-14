@@ -3,6 +3,7 @@ package com.acme.acmetrade.endpoints;
 import com.acme.acmetrade.domain.Trader;
 import com.acme.acmetrade.repository.TraderRepository;
 import io.restassured.mapper.TypeRef;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,6 +42,13 @@ public class TraderControllerTest {
 		myTrader.setEmail("test@test.com");
 		myTrader.setPhone("555-555-5555");
 		testTrader = traderRepository.save(myTrader);
+	}
+
+	@AfterEach
+	void killTrader() {
+		if(traderRepository.existsById(testTrader.getId())) {
+			traderRepository.delete(testTrader);
+		}
 	}
 
 	@Test
