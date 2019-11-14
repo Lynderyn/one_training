@@ -93,5 +93,21 @@ public class TraderControllerTest {
 				}
 				);
 	}
-	
+
+	//adam methods below
+
+    //adam methods above
+
+    //hoa methods below
+
+    //hoa methods above
+
+    //mz meth eblow
+
+    //mz method above
+
+    //my methods below
+
+    //my methods above
+
 } // end of TraderControllerTest
