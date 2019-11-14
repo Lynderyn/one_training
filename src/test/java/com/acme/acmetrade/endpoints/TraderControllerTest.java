@@ -3,7 +3,6 @@ package com.acme.acmetrade.endpoints;
 import com.acme.acmetrade.domain.Trader;
 import com.acme.acmetrade.repository.TraderRepository;
 import io.restassured.mapper.TypeRef;
-import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -79,10 +78,9 @@ public class TraderControllerTest {
 		.when()
 		.get(uri)
 		.then()
-		.statusCode(HttpStatus.OK.value())
+		.statusCode(HttpStatus.FOUND.value())
 		.and()
 		.extract().as(Trader.class);
-
 		assertNotNull(rtnValue);
 	}
 	
