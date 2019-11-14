@@ -1,6 +1,7 @@
 package com.acme.acmetrade.endpoints;
 
 import com.acme.acmetrade.domain.Trader;
+import com.acme.acmetrade.exception.TraderIdException;
 import com.acme.acmetrade.exception.TraderNotFoundException;
 import com.acme.acmetrade.services.MapValidationErrorService;
 import com.acme.acmetrade.services.TradersService;
@@ -51,6 +52,21 @@ public class TraderController {
 	public ResponseEntity<Object> deleteTraderById(@PathVariable("id") String id) {
 		tradersService.deleteTrader(id);
 		return new ResponseEntity<Object>("Successfully deleted trader", HttpStatus.OK);
+	}
+
+	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> updateTrader(@PathVariable(name = "id") String traderId,
+											   @Valid @RequestBody Trader trader, BindingResult bindingResult) {
+		mapValidationErrorService.MapValidationService(bindingResult);
+		if(trader.getId() == null || trader.getId().isEmpty()) {
+			trader.setId(traderId);
+		}
+		if(!traderId.equals(trader.getId())) {
+			String badId = trader.getId();
+			throw new TraderIdException("Attempting to update traders with mismatched ids.  id 1 = '" + badId + "' and id 2 = '" + traderId +"'");
+		}
+		Trader updatedTrader = tradersService.updateTrader(trader);
+		return new ResponseEntity<>(updatedTrader, HttpStatus.OK);
 	}
 
 }
