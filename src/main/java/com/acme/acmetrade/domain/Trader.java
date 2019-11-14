@@ -3,6 +3,8 @@ package com.acme.acmetrade.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.*;
 
@@ -13,18 +15,20 @@ public class Trader {
     private String id;
 
 
-    @Pattern(regexp = "[A-Za-z]*")
+    @Pattern(regexp = "[A-Za-z]*", message = "Bad Name")
     private String fName;
 
-    @Pattern(regexp = "[A-Za-z]*")
+    @Pattern(regexp = "[A-Za-z]*", message = "Bad Name")
     private String lName;
 
-    @Pattern(regexp = "((\\(\\d{3}\\) ?)|(\\d{3}-))?\\d{3}-\\d{4}")
+    @Pattern(regexp = "((\\(\\d{3}\\) ?)|(\\d{3}-))?\\d{3}-\\d{4}", message = "Bad Phone")
     private String phone;
 
+    @Email
     private String email;
 
-    @Pattern(regexp = "[0-9]* [A-Za-z]*")
+
+    @NotNull
     private String address;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -38,7 +42,7 @@ public class Trader {
 
     public Trader() {};
 
-    public Trader(String id, String fName, String lName, String phone, String email, String address, List<Account> accounts, Date createdAt, Date updatedAt) {
+    public Trader(String id, @Pattern(regexp = "[A-Za-z]*") String fName, @Pattern(regexp = "[A-Za-z]*") String lName, @Pattern(regexp = "((\\(\\d{3}\\) ?)|(\\d{3}-))?\\d{3}-\\d{4}") String phone, @NotNull String email, @Pattern(regexp = "[0-9]* [A-Za-z]*") String address, List<Account> accounts, Date createdAt, Date updatedAt) {
         this.id = id;
         this.fName = fName;
         this.lName = lName;
