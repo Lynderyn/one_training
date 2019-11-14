@@ -1,6 +1,7 @@
 package com.acme.acmetrade.endpoints;
 
 import com.acme.acmetrade.domain.Trader;
+import com.acme.acmetrade.exception.TraderNotFoundException;
 import com.acme.acmetrade.services.MapValidationErrorService;
 import com.acme.acmetrade.services.TradersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,11 @@ public class TraderController {
 
 	@GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> getTraderById(@PathVariable("id") String id) {
-		return new ResponseEntity<Object>(tradersService.getTrader(id), HttpStatus.OK);
+		Trader myTrader = tradersService.getTrader(id);
+		if(myTrader == null) {
+			throw new TraderNotFoundException("The trader with id '" + id + "' was not found.");
+		}
+		return new ResponseEntity<>(myTrader, HttpStatus.FOUND);
 	}
 
 	@PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,7 +50,7 @@ public class TraderController {
 	@DeleteMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> deleteTraderById(@PathVariable("id") String id) {
 		tradersService.deleteTrader(id);
-		return new ResponseEntity<Object>("Sucessfully deleted trader", HttpStatus.OK);
+		return new ResponseEntity<Object>("Successfully deleted trader", HttpStatus.OK);
 	}
 
 }

@@ -26,10 +26,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
-public class TraderControllerTest {
+public class AccountControllerTest {
 
 	@Autowired
 	private TraderRepository traderRepository;
+
+	@Autowired
+	private TraderController traderController;
 
 	private Trader testTrader;
 
@@ -46,94 +49,34 @@ public class TraderControllerTest {
 
 	@AfterEach
 	void killTrader() {
-		if (traderRepository.existsById(testTrader.getId())) {
+		if(traderRepository.existsById(testTrader.getId())) {
 			traderRepository.delete(testTrader);
 		}
 	}
 
-	@Test
-	void getTradersTest() {
-		List<Trader> traders = given()
-				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.when()
-				.get("/traders/")
-				.then()
-				.statusCode(HttpStatus.OK.value())
-				.and()
-				.extract()
-				.as(new TypeRef<List<Trader>>() {
-				});
-
-		assertThat(traders.contains(testTrader));
-	}
-
-	@Test
-	void getTraderIdTest() {
-		String uri = "/traders/" + testTrader.getId();
-		Trader rtnValue =
-				given()
-						.accept(MediaType.APPLICATION_JSON_VALUE)
-						.when()
-						.get(uri)
-						.then()
-						.statusCode(HttpStatus.OK.value())
-						.and()
-						.extract().as(Trader.class);
-
-
-		assertNotNull(rtnValue);
-	}
-
-	@Test
-	void testAssertAll() {
-		assertAll(
-				() -> {
-					assertEquals(8, 8);
-				},
-				() -> {
-					assertTrue(8 == (6 + 2));
-				}
-		);
-	}
+	
 
 	//adam methods below
 
-	//adam methods above
+    //adam methods above
 
-	//hoa methods below
+    //hoa methods below
+
+    //hoa methods above
+
+    //mz meth below
+	
+    //mz method above
+
+    //jesse methods below
+
 	@Test
-	void removeTraderIdTest() {
-		List<Trader> traders = given()
-
-				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.when()
-				.get("/traders/")
-				.then()
-				.statusCode(HttpStatus.OK.value())
-				.and()
-				.extract()
-				.as(new TypeRef<List<Trader>>() {
-				});
-
-		System.out.println("Orig List");
-		traders.forEach(id -> System.out.println(id));
-		traders.remove(1);
-		System.out.println("Orig List minus the 2nd trader id");
-		traders.forEach(id -> System.out.println(id));
-//		System.out.println("Orig List Minus one list: " + traders);
-//		assertNotNull(rtnValue);
+	void addSamePersonTwice() {
+		given().request().body(testTrader).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE)
+		.when().post("/traders/")
+		.then().statusCode(HttpStatus.BAD_REQUEST.value());
 	}
 
+    //my methods above
 
-	//hoa methods above
-
-	//mz meth eblow
-
-	//mz method above
-
-	//my methods below
-
-	//my methods above
-
-	// end of TraderControllerTest
-}
+} // end of TraderControllerTest
