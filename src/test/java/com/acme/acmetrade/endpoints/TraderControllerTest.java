@@ -42,8 +42,18 @@ public class TraderControllerTest {
 		.extract().as(Trader.class);
 
 		assertNotNull(rtnValue);
-
-
+	}
+	
+	@Test
+	void testAssertAll() {
+		assertAll(
+				()->{
+					assertEquals(8, 8);
+				},
+				()->{
+					assertTrue(8==(6+2));
+				}
+				);
 	}
 	
 } // end of TraderControllerTest
