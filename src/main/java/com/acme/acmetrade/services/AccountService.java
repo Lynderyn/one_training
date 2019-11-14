@@ -2,6 +2,7 @@ package com.acme.acmetrade.services;
 
 import com.acme.acmetrade.domain.Account;
 import com.acme.acmetrade.exception.AccountIdException;
+import com.acme.acmetrade.exception.AccountNotFoundException;
 import com.acme.acmetrade.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,12 @@ public class AccountService {
             }
         }
         return accountRepository.save(account);
+    }
+
+    public void deleteAccount(String accountId) {
+        if(!accountRepository.existsById(accountId)) {
+            throw new AccountNotFoundException("The account with id '" + accountId + "' does not exist.");
+        }
+        accountRepository.deleteById(accountId);
     }
 }
