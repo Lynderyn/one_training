@@ -3,7 +3,6 @@ package com.acme.acmetrade.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
-import org.hibernate.validator.constraints.NotBlank;
 import java.util.*;
 
 @Entity
@@ -22,10 +21,7 @@ public class Trader {
 
     private String address;
 
-    @NotBlank
-    private String govId;
-
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Account> accounts;
 
     @Column(updatable = false)
@@ -36,14 +32,13 @@ public class Trader {
 
     public Trader() {};
 
-    public Trader(String id, String fName, String lName, String phone, String email, String address, String govId, List<Account> accounts, Date createdAt, Date updatedAt) {
+    public Trader(String id, String fName, String lName, String phone, String email, String address, List<Account> accounts, Date createdAt, Date updatedAt) {
         this.id = id;
         this.fName = fName;
         this.lName = lName;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.govId = govId;
         this.accounts = accounts;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -106,14 +101,6 @@ public class Trader {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getGovId() {
-        return govId;
-    }
-
-    public void setGovId(String govId) {
-        this.govId = govId;
     }
 
     public Date getCreatedAt() {
