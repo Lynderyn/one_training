@@ -31,9 +31,6 @@ public class TraderControllerTest {
 	@Autowired
 	private TraderRepository traderRepository;
 
-	@Autowired
-	private TraderController traderController;
-
 	private Trader testTrader;
 
 	@BeforeEach
@@ -49,7 +46,7 @@ public class TraderControllerTest {
 
 	@AfterEach
 	void killTrader() {
-		if(traderRepository.existsById(testTrader.getId())) {
+		if (traderRepository.existsById(testTrader.getId())) {
 			traderRepository.delete(testTrader);
 		}
 	}
@@ -57,86 +54,87 @@ public class TraderControllerTest {
 	@Test
 	void getTradersTest() {
 		List<Trader> traders = given()
-		.accept(MediaType.APPLICATION_JSON_VALUE)
-		.when()
-		.get("/traders/")
-		.then()
-		.statusCode(HttpStatus.OK.value())
-		.and()
-		.extract()
-		.as(new TypeRef<List<Trader>>() {});
+				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.when()
+				.get("/traders/")
+				.then()
+				.statusCode(HttpStatus.OK.value())
+				.and()
+				.extract()
+				.as(new TypeRef<List<Trader>>() {
+				});
 
+		traders.forEach(id -> System.out.println(id));
 		assertThat(traders.contains(testTrader));
 	}
 
 	@Test
-	void getTraderIdTest(){
+	void getTraderIdTest() {
 		String uri = "/traders/" + testTrader.getId();
 		Trader rtnValue =
-		given()
-		.accept(MediaType.APPLICATION_JSON_VALUE)
-		.when()
-		.get(uri)
-		.then()
-		.statusCode(HttpStatus.FOUND.value())
-		.and()
-		.extract().as(Trader.class);
+				given()
+						.accept(MediaType.APPLICATION_JSON_VALUE)
+						.when()
+						.get(uri)
+						.then()
+						.statusCode(HttpStatus.OK.value())
+						.and()
+						.extract().as(Trader.class);
+
+
 		assertNotNull(rtnValue);
 	}
-	
+
 	@Test
 	void testAssertAll() {
 		assertAll(
-				()->{
-					List<Trader> traders = given()
-							.accept(MediaType.APPLICATION_JSON_VALUE)
-							.when()
-							.get("/traders/")
-							.then()
-							.statusCode(HttpStatus.OK.value())
-							.and()
-							.extract()
-							.as(new TypeRef<List<Trader>>() {});
-					traders.forEach(t->{System.out.println(t.getfName() + " " + t.getlName());});
+				() -> {
+					assertEquals(8, 8);
 				},
-				()->{
-					assertTrue(8==(6+2));
+				() -> {
+					assertTrue(8 == (6 + 2));
 				}
-				);
+		);
 	}
 
 	//adam methods below
 
-    //adam methods above
+	//adam methods above
 
-    //hoa methods below
-
-    //hoa methods above
-
-    //mz meth eblow
+	//hoa methods below
 	@Test
-	void testAssertAllTraders() {
-		assertAll(
-				()->{
-					assertEquals(8, 8);
-				},
-				()->{
-					assertTrue(8==(6+2));
-				}
-				);
+	void removeTraderIdTest() {
+		List<Trader> traders = given()
+
+				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.when()
+				.get("/traders/")
+				.then()
+				.statusCode(HttpStatus.OK.value())
+				.and()
+				.extract()
+				.as(new TypeRef<List<Trader>>() {
+				});
+
+		System.out.println("Orig List");
+		traders.forEach(id -> System.out.println(id));
+		traders.remove(1);
+		System.out.println("Orig List minus the 2nd trader id");
+		traders.forEach(id -> System.out.println(id));
+//		System.out.println("Orig List Minus one list: " + traders);
+//		assertNotNull(rtnValue);
 	}
 
-    //mz method above
 
-    //my methods below
+	//hoa methods above
 
-	@Test
-	void addSamePersonTwice() {
-		given().request().body(testTrader).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE)
-		.when().post("/traders/")
-		.then().statusCode(HttpStatus.BAD_REQUEST.value());
-	}
+	//mz meth eblow
 
-    //my methods above
+	//mz method above
 
-} // end of TraderControllerTest
+	//my methods below
+
+	//my methods above
+
+	// end of TraderControllerTest
+}
