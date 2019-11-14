@@ -1,6 +1,7 @@
 package com.acme.acmetrade.services;
 
 import com.acme.acmetrade.domain.Account;
+import com.acme.acmetrade.exception.AccountIdException;
 import com.acme.acmetrade.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,5 +18,19 @@ public class AccountService {
 
     public Iterable<Account> getAllAccounts() {
         return accountRepository.findAll();
+    }
+
+    public Account getAccount(String accountId) {
+        return accountRepository.findOneById(accountId);
+    }
+
+    public Account createAccount(Account account) {
+        String id = account.getId();
+        if(id != null && !id.isEmpty()) {
+            if(accountRepository.existsById(id)) {
+                throw new AccountIdException("The account id of '" + id + "' already exists");
+            }
+        }
+        return accountRepository.save(account);
     }
 }
