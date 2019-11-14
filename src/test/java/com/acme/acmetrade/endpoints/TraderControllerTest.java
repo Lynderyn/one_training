@@ -29,7 +29,7 @@ public class TraderControllerTest {
 		.statusCode(HttpStatus.OK.value());
 	}
 
-	@Test
+	@Test //Neg Test - ID not in DB
 	void getTraderIdTest(){
 		Trader rtnValue =
 		given()
