@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.*;
@@ -15,19 +16,22 @@ public class Trader {
     @Id
     private String id;
 
-    @Pattern(regexp = "[A-Za-z]*", message = "Bad Name")
+    @Pattern(regexp = "^[A-Za-z]{2,30}$", message = "Bad Name")
     private String fName;
 
-    @Pattern(regexp = "[A-Za-z]*", message = "Bad Name")
+    @Pattern(regexp = "^[A-Za-z]{2,30}$", message = "Bad Name")
     private String lName;
 
-    @Pattern(regexp = "((\\(\\d{3}\\) ?)|(\\d{3}-))?\\d{3}-\\d{4}", message = "Bad Phone")
+    //@Pattern(regexp = "((\\(\\d{3}\\) ?)|(\\d{3}-))?\\d{3}-\\d{4}", message = "Bad Phone")
+    @Pattern(regexp = "^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$",
+            message = "North American phone numbers only")
     private String phone;
 
+    @NotBlank
     @Email
     private String email;
 
-    @NotNull
+    @NotBlank
     private String address;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -55,6 +59,14 @@ public class Trader {
         this.accounts = accounts;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public Trader(@Pattern(regexp = "[A-Za-z]*", message = "Bad Name") String fName, @Pattern(regexp = "[A-Za-z]*", message = "Bad Name") String lName, @Pattern(regexp = "((\\(\\d{3}\\) ?)|(\\d{3}-))?\\d{3}-\\d{4}", message = "Bad Phone") String phone, @Email String email, @NotNull String address) {
+        this.fName = fName;
+        this.lName = lName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
     }
 
     @PrePersist
