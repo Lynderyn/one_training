@@ -33,42 +33,6 @@
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.jayway.jsonpath</groupId>
-			<artifactId>json-path</artifactId>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-      		<groupId>io.rest-assured</groupId>
-      		<artifactId>xml-path</artifactId>
-      		<version>4.1.2</version>
-      		<scope>test</scope>
-	  	</dependency>
-	  	<dependency>
-      		<groupId>io.rest-assured</groupId>
-      		<artifactId>xml-path</artifactId>
-      		<version>4.1.2</version>
-      		<scope>test</scope>
-		</dependency>
-		<dependency>
-      		<groupId>io.rest-assured</groupId>
-      		<artifactId>json-schema-validator</artifactId>
-      		<version>4.1.2</version>
-      		<scope>test</scope>
-		</dependency>
-		<dependency>
-      		<groupId>io.rest-assured</groupId>
-      		<artifactId>spring-mock-mvc</artifactId>
-      		<version>4.1.2</version>
-      		<scope>test</scope>
-		</dependency>
-		<dependency>
-      		<groupId>io.rest-assured</groupId>
-      		<artifactId>spring-web-test-client</artifactId>
-      		<version>4.1.2</version>
-      		<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
@@ -98,9 +62,7 @@
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
-			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -109,21 +71,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>2.0.1.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate.validator</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>6.0.14.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate.validator</groupId>
-			<artifactId>hibernate-validator-annotation-processor</artifactId>
-			<version>6.0.14.Final</version>
-		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
