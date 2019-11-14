@@ -3,6 +3,7 @@ package com.acme.acmetrade.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.*;
 
 @Entity
@@ -11,14 +12,19 @@ public class Trader {
     @Id
     private String id;
 
+
+    @Pattern(regexp = "[A-Za-z]*")
     private String fName;
 
+    @Pattern(regexp = "[A-Za-z]*")
     private String lName;
 
+    @Pattern(regexp = "((\\(\\d{3}\\) ?)|(\\d{3}-))?\\d{3}-\\d{4}")
     private String phone;
 
     private String email;
 
+    @Pattern(regexp = "[0-9]* [A-Za-z]*")
     private String address;
 
     @OneToMany(cascade = CascadeType.ALL)
