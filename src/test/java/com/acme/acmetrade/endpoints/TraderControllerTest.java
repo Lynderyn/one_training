@@ -2,7 +2,6 @@ package com.acme.acmetrade.endpoints;
 
 import com.acme.acmetrade.domain.Trader;
 import com.acme.acmetrade.repository.TraderRepository;
-import io.restassured.RestAssured;
 import io.restassured.mapper.TypeRef;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -162,6 +161,38 @@ void validateTraderEntityRules(){
 		given().request().body(testTrader).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE)
 				.when().post("/traders/")
 				.then().statusCode(HttpStatus.BAD_REQUEST.value());
+	}
+
+	@Test
+	void addTraderTest() {
+		Trader myTrader = new Trader();
+		myTrader.setfName("test");
+		myTrader.setlName("trader");
+		myTrader.setAddress("1 test");
+		myTrader.setEmail("testtrader@test.com");
+		myTrader.setPhone("555-555-2323");
+
+		Trader response =
+		given().accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE).body(myTrader)
+		.when().post("/traders/")
+		.then().statusCode(HttpStatus.CREATED.value())
+		.and().extract().body().as(Trader.class);
+
+		assertAll(
+				"Fields match",
+				() -> {
+					assertEquals(myTrader.getlName(), response.getlName(), "last name does not match");
+				},
+				() -> {
+					assertEquals(myTrader.getfName(), response.getfName(), "first name does not match");
+				},
+				() -> {
+					assertEquals(myTrader.getPhone(), response.getPhone(), "phone does not match");
+				},
+				() -> {
+					assertEquals(myTrader.getEmail(), response.getEmail(), "email does not match");
+				}
+		);
 	}
 
 	//my methods above

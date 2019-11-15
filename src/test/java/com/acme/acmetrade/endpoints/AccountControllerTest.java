@@ -84,8 +84,7 @@ public class AccountControllerTest {
 	@Test
 	void testGetAccounts() {
 		List<Account> accounts = given().accept(MediaType.APPLICATION_JSON_VALUE).when().get("/accounts/").then()
-				.statusCode(HttpStatus.OK.value()).and().extract().as(new TypeRef<List<Account>>() {
-				});
+				.statusCode(HttpStatus.OK.value()).and().extract().as(new TypeRef<List<Account>>() {});
 		assertTrue(accounts.contains(testAccount));
 	}
 
@@ -134,6 +133,8 @@ public class AccountControllerTest {
 	// mz method above
 
 	// jesse methods below
+
+
 
 	// my methods above
 
