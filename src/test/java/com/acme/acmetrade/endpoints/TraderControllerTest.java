@@ -157,6 +157,18 @@ void validateTraderEntityRules(){
 	//my methods below
 
 	@Test
+	void testDeleteTrader() {
+		String uri = "/traders/" + testTrader.getId();
+		given().accept(MediaType.APPLICATION_JSON_VALUE)
+		.when().delete(uri)
+		.then().statusCode(HttpStatus.OK.value());
+		assertFalse(traderRepository.existsById(testTrader.getId()));
+		given().accept(MediaType.APPLICATION_JSON_VALUE)
+		.when().get(uri)
+		.then().statusCode(HttpStatus.NOT_FOUND.value());
+	}
+
+	@Test
 	void addSamePersonTwice() {
 		given().request().body(testTrader).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE)
 				.when().post("/traders/")
