@@ -67,7 +67,7 @@ public class TraderControllerTest {
 	}
 
 	@Test
-	void getTraderIdTest() {
+	void getTraderByIdTest() {
 		String uri = "/traders/" + testTrader.getId();
 		Trader rtnValue =
 				given()
@@ -79,8 +79,8 @@ public class TraderControllerTest {
 						.and()
 						.extract().as(Trader.class);
 
-
 		assertNotNull(rtnValue);
+		assertEquals(testTrader, rtnValue);
 	}
 
 	//adam methods below
@@ -105,16 +105,12 @@ void validateTraderEntityRules(){
 			//Email
 				()-> {
 					Trader email = new Trader("first","last","555-555-5555", "","1 test");
-
-						assertThrows(TransactionSystemException.class, () -> traderRepository.save(email));
-
-
+					assertThrows(TransactionSystemException.class, () -> traderRepository.save(email));
 				},
 			//Address
 				()-> {
 					Trader email = new Trader("first","last","555-555-5555", "test@test.com","");
 					assertThrows(TransactionSystemException.class, () -> traderRepository.save(email));
-
 				}
 
 
@@ -139,7 +135,7 @@ void validateTraderEntityRules(){
 		Trader result =
 		given().accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE).body(testTrader)
 		.when().put(uri)
-		.then().statusCode(HttpStatus.OK.value())
+		.then().statusCode(HttpStatus.ACCEPTED.value())
 		.and().extract().body().as(Trader.class);
 		assertEquals(testTrader.getlName(), result.getlName());
 	}
@@ -150,7 +146,9 @@ void validateTraderEntityRules(){
 		given().accept(MediaType.APPLICATION_JSON_VALUE)
 		.when().delete(uri)
 		.then().statusCode(HttpStatus.OK.value());
+
 		assertFalse(traderRepository.existsById(testTrader.getId()));
+
 		given().accept(MediaType.APPLICATION_JSON_VALUE)
 		.when().get(uri)
 		.then().statusCode(HttpStatus.NOT_FOUND.value());

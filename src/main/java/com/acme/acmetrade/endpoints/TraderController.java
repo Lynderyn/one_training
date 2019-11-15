@@ -66,7 +66,7 @@ public class TraderController {
 			throw new TraderIdException("Attempting to update traders with mismatched ids.  id 1 = '" + badId + "' and id 2 = '" + traderId +"'");
 		}
 		Trader updatedTrader = tradersService.updateTrader(trader);
-		return new ResponseEntity<>(updatedTrader, HttpStatus.OK);
+		return new ResponseEntity<>(updatedTrader, HttpStatus.ACCEPTED);
 	}
 
 }
