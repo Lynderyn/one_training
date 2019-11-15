@@ -157,6 +157,18 @@ void validateTraderEntityRules(){
 	//my methods below
 
 	@Test
+	void testUpdateTrader() {
+		String uri = "/traders/" + testTrader.getId();
+		testTrader.setlName("lastName");
+		Trader result =
+		given().accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE).body(testTrader)
+		.when().put(uri)
+		.then().statusCode(HttpStatus.FOUND.value())
+		.and().extract().body().as(Trader.class);
+		assertEquals(testTrader.getlName(), result.getlName());
+	}
+
+	@Test
 	void testDeleteTrader() {
 		String uri = "/traders/" + testTrader.getId();
 		given().accept(MediaType.APPLICATION_JSON_VALUE)
