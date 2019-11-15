@@ -163,7 +163,7 @@ void validateTraderEntityRules(){
 		Trader result =
 		given().accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE).body(testTrader)
 		.when().put(uri)
-		.then().statusCode(HttpStatus.FOUND.value())
+		.then().statusCode(HttpStatus.OK.value())
 		.and().extract().body().as(Trader.class);
 		assertEquals(testTrader.getlName(), result.getlName());
 	}
