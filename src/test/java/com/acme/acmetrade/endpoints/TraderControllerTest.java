@@ -76,7 +76,7 @@ public class TraderControllerTest {
 						.when()
 						.get(uri)
 						.then()
-						.statusCode(HttpStatus.OK.value())
+						.statusCode(HttpStatus.FOUND.value())
 						.and()
 						.extract().as(Trader.class);
 
@@ -124,29 +124,6 @@ void validateTraderEntityRules(){
 	//adam methods above
 
 	//hoa methods below
-	@Test
-	void removeTraderIdTest() {
-		List<Trader> traders = given()
-
-				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.when()
-				.get("/traders/")
-				.then()
-				.statusCode(HttpStatus.OK.value())
-				.and()
-				.extract()
-				.as(new TypeRef<List<Trader>>() {
-				});
-
-		System.out.println("Orig List");
-		traders.forEach(id -> System.out.println(id));
-		traders.remove(1);
-		System.out.println("Orig List minus the 2nd trader id");
-		traders.forEach(id -> System.out.println(id));
-//		System.out.println("Orig List Minus one list: " + traders);
-//		assertNotNull(rtnValue);
-	}
-
 
 	//hoa methods above
 
